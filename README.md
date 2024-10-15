@@ -29,11 +29,11 @@ Mobile first UI
 * Jellyfin - won't work without it!
 * Docker Compose is highly recommended (docker compose provided below)
 * No art work is included, you will likely want to add the following files to "images/icons" and make it more purty:
-** imdb.png - button to open the IMDb page for the movie/tv show
-** tmdb.png - button to open the TMDB page for the movie/tv show
-** mits.png - app icon
-** default.png - if no tags are found, this will be displayed
-** tag-name.png - where tag-name is the name of the tag you want to monitor for (i.e. DVD, Blu-ray, 4k, etc) 
+  * imdb.png - button to open the IMDb page for the movie/tv show
+  * tmdb.png - button to open the TMDB page for the movie/tv show
+  * mits.png - app icon
+  * default.png - if no tags are found, this will be displayed
+  * tag-name.png - where tag-name is the name of the tag you want to monitor for (i.e. DVD, Blu-ray, 4k, etc) 
 * Note that I run this on Docker Compose with Portainer as the UI to manage - Linux based server.
 
 ### Installing
@@ -91,7 +91,7 @@ GUNICORN_BIND='0.0.0.0'
 ```
 
 * secrets are customized in the .secrets file (stored in clear text for now - beware!)
-SESSION_SECRET="session_secret_random" #random characters for handling user authentication 
+```SESSION_SECRET="session_secret_random" #random characters for handling user authentication 
 USERNAME="mits" #name of the user 
 PASSWORD="CustomPasswordGoesHere" #password
 JELLYFIN_API_KEY="jellyfin_api"SESSION_SECRET="session_secret_random" #API key from Jellyfin
