@@ -1,0 +1,5 @@
+.secrets
+images/
+redis-data/
+**/__pycache__/
+.vscode/

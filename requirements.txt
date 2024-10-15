@@ -1,0 +1,7 @@
+redis
+python-multipart
+watchdog
+flask
+flask-login
+gunicorn
+requests

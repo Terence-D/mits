@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/theme.css">
+    <link rel="icon" type="image/x-icon" href="/static/images/icons/mits.png">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-primary sticky-top ">
+        <div class="container-fluid">
+            <img src="/static/images/icons/mits.png" alt="Logo" width="48" height="48" class="d-inline-block align-text-top">
+      
+            <a class="navbar-brand" href="#">MITS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link {% if page_title == 'Dashboard' %}active{% endif %}" aria-current="page"
+                            href="dashboard">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if page_title == 'List' %}active{% endif %}" href="list">List</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Refresh
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" id="refreshPartialLink" href="#">Partial</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" id="refreshFullLink" href="#">Full</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Filters
+                        </a>
+                        <ul class="dropdown-menu" id="filter-list" >
+                            <li class="ps-3"><input class="form-check-input" type="checkbox" name="checkboxGroup" id="showMovies"
+                                    value="Movies" checked="true">
+                                <label class="form-check-inputlabel">Movies</label>
+                            </li>
+                            <li class="ps-3"><input class="form-check-input" type="checkbox" name="checkboxGroup" id="showSeries"
+                                    value="Series" checked="true">
+                                <label class="form-check-inputlabel">Series</label>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="container-fluid">
+                    <span class="navbar-text" id="media-count"></span>
+                </div>
+                <ul class="nav navbar-nav ms-auto w-100 justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br />
+    <div class="container">
+        <div class="row">
+            <div class="input-group">  
+                <input type="text" class="form-control search-input" placeholder="Type to search...">
+                <button class="btn btn-outline-secondary btn-sm clear-button" type="button">X</button>
+              </div>
+        </div>
+
+        <div class="row">
+            <main role="main">
+                {% if page_title == 'Dashboard' %}
+                <div class="row" id="movie-grid"></div>
+                <script src="/static/dashboard-script.js" type='module'></script>
+                {% elif page_title == 'List' %}
+                <br/>
+                <table id="movie-table">
+                    <tr>
+                        <th id="headerTitle" data-sort="title">Title<br/><i class="sort-arrow"></i></th> 
+                        <th id="headerYear" data-sort="year">Year<i class="sort-arrow"></i></th>
+                        <th>Details<br/>&nbsp;</th>
+                        <th>IMDB<br/>&nbsp;</th>
+                        <th>TMDB<br/>&nbsp;</th>
+                    </tr>
+                </table>
+                <script src="/static/list-script.js" type='module'></script>
+                {% endif %}
+            </main>
+        </div>
+    </div>
+
+    <!-- Season Modal -->
+    <div class="modal fade" id="seasonModal" tabindex="-1" role="dialog" aria-labelledby="seasonModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="seasonModalLabel">Series Details</h5>
+                </div>
+                <div class="modal-body" id="modalBody">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wait Modal -->
+    <div class="modal fade" id="waitModal" tabindex="-1" role="dialog" aria-labelledby="waitModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="waitModalLabel">Please Wait</h5>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    Refreshing, please wait.  App will reload automatically.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+.movie-poster {
+    width: 150px;
+    margin-bottom: 20px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3),
+            -5px -5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.movie-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.card-dark {
+    background-color: #2D3250;  
+}
+
+.card{
+    margin:8px!important;
+}
+
+.tag-icon {
+    width: 32px;
+    height: 32px;
+} 
+
+.imdb-icon {
+    width: 64px;
+    height: 48px;
+} 
+
+.tmdb-icon {
+    width: 48px;
+    height: 48px;
+} 
+
+.title {
+    white-space: nowrap;
+    overflow: hidden;  
+    text-align: center;
+    margin: 8px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 4px; /* Add padding to cells */
+    text-align: center; /* Center text within cells */
+    border: 1px solid #ddd; /* Add a thin border to cells */
+}
+  
+th {
+    background-color: hsla(0, 0%, 95%, 0.13); 
+}
+
+.sort-arrow {
+    display: inline-block; /* Ensure inline display for arrows */
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 8px solid #ccc; /* Adjust color as needed */
+  }
+  
+  .sort-asc { /* Style for ascending sort indicator */
+    border-top: 0;
+    border-bottom: 8px solid #0095ff; /* Adjust color as needed */
+  }
+  
+  .sort-desc { /* Style for descending sort indicator */
+    border-bottom: 0;
+    border-top: 8px solid #f00; /* Adjust color as needed */
+  }

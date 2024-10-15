@@ -1,0 +1,36 @@
+services:
+  app:
+    build: 
+      context: .  # Build context is the current directory
+      dockerfile: python.dockerfile  # Specify the Dockerfile for Python app
+    volumes:
+      - /mnt/movies:/movies
+      - /mnt/tv:/series
+      - ./python_app:/python_app  
+      - ./images:/python_app/static/images
+    depends_on:
+      - redis
+    working_dir: /python_app
+    ports:
+      - "${APP_PORT}:${APP_PORT}"  # Map container port to host port
+    env_file:
+      - .secrets
+      - .env
+    command: gunicorn --config gunicorn_config.py main:app
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1      
+  redis: #this must match REDIS_SERVER_NAME
+    image: redis:alpine
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"   
+    volumes:
+      - ./redis-data:/data  # Mount a named volume for persisting data  
+    environment:
+      REDIS_ARGS: --save 600 1
+    working_dir: /data
+    restart: unless-stopped
+
+volumes:
+  # Additional volumes for shared data
+  redis-data:  # Define a named volume for persistence
