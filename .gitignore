@@ -1,4 +1,6 @@
 .secrets
+.env
+run.sh
 images/
 redis-data/
 **/__pycache__/
