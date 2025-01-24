@@ -25,7 +25,10 @@ def readImage(id, key):
   imageResponse = requests.get(endpoint, headers=headers)
   if (imageResponse.status_code == 200):
     filename = key + ".jpg"
-    filePath = os.path.join("/python_app/static/images/media/", filename)  # Create a folder "images" if needed
+    directory = "/python_app/static/images/media/" 
+    if not os.path.exists(directory):
+      os.makedirs(directory) # Create the directory if it does not exist
+    filePath = os.path.join(directory, filename)
     with open(filePath, "wb") as f:
       f.write(imageResponse.content)
     return filename
@@ -51,7 +54,15 @@ def readMediaLibrary(id, fullRefresh, isSeries):
     if startsWithAny(item["Path"], folder):
       media = mitsCommon.Media()
       media.title = item["Name"]
-      media.year = item["ProductionYear"]
+      
+      # Check if "ProductionYear" exists in the item dictionary
+      if "ProductionYear" in item:
+          media.year = item["ProductionYear"]
+      else:
+          print (media.title)
+          for key in item.keys(): print(key)
+          # Handle the case where the key doesn't exist
+          media.year = "UNKOWN"  # or any default value you prefer
 
       if "ExternalUrls" in item:
         urls = item["ExternalUrls"]
