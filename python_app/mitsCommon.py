@@ -6,6 +6,7 @@ movieFolders = json.loads(os.environ.get('MOVIE_WATCH_DIRS', '["/media/Movies"]'
 seriesFolders = json.loads(os.environ.get('SERIES_WATCH_DIRS', '["/media/Series"]'))
 watchedTags = json.loads(os.environ.get('TAG_WATCH', '["DVD", "4K", "Blu-Ray"]'))
 seasonsToIgnore = json.loads(os.environ.get('SEASON_IGNORE', '["Specials"]'))
+seasonTagIgnore = os.environ.get('SEASON_TAG_IGNORE', 'MITS-IGNORE-TAG')
 defaultTag = os.environ.get('TAG_DEFAULT', 'Blu-Ray')
 moviePrefix = "MOVIE-"
 seriesPrefix = "SERIES-"

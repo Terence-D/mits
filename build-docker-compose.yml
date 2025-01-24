@@ -23,7 +23,7 @@ services:
   redis: #this must match REDIS_SERVER_NAME
     image: redis:alpine
     ports:
-      - "${REDIS_PORT}:${REDIS_PORT}"   
+      - "6379:6379"   
     volumes:
       - ./redis-data:/data  # Mount a named volume for persisting data  
     environment:

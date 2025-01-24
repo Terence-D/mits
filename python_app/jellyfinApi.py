@@ -59,8 +59,8 @@ def readMediaLibrary(id, fullRefresh, isSeries):
       if "ProductionYear" in item:
           media.year = item["ProductionYear"]
       else:
-          print (media.title)
-          for key in item.keys(): print(key)
+          # print (media.title)
+          # for key in item.keys(): print(key)
           # Handle the case where the key doesn't exist
           media.year = "UNKOWN"  # or any default value you prefer
 
@@ -96,6 +96,14 @@ def getTags(item):
     foundTags.append(mitsCommon.defaultTag)
   return foundTags
 
+def ignoreSeasonByTag(item):
+  if ("Tags" in item):
+    tags = item["Tags"]
+    for tag in tags:
+      if tag == mitsCommon.seasonTagIgnore:
+        return True
+  return False
+
 def generateSeasons(id, name):
   endpoint = endpointLibraryItems.format(id)
   if excludeLocationTypes != '':
@@ -114,8 +122,11 @@ def generateSeasons(id, name):
           season.seasonTitle = seasonName
           if "ProductionYear" in item:
             season.year = item["ProductionYear"]
+
           season.tags = getTags(item)
-          seasons.append(season)
+
+          if not ignoreSeasonByTag(item):
+            seasons.append(season)
   return seasons
 
 def startsWithAny(text, prefixes):
