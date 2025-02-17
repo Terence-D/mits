@@ -17,6 +17,8 @@ filterList = os.environ.get('TAG_WATCH')
 defaultTag = os.environ.get('TAG_DEFAULT')
 users = { os.environ.get('USERNAME'): {'password': os.environ.get('PASSWORD')} }
 app.secret_key = os.environ.get('SESSION_SECRET')
+skipLogin = os.environ.get('SKIP_LOGIN')
+default_username = list(users.keys())[0]
 
 REMEMBER_COOKIE_DURATION = datetime.timedelta(days=31)  # Example: 31 days
 app.config['REMEMBER_COOKIE_DURATION'] = REMEMBER_COOKIE_DURATION
@@ -62,6 +64,12 @@ def logout():
 
 @app.route('/')
 def root():
+    if skipLogin == 'true':
+        if default_username in users:
+            user = User()
+            user.id = default_username
+            flask_login.login_user(user, False) #remember=remember)
+            return flask.redirect(flask.url_for('dashboard'))
     return flask.render_template('index.html') 
 
 @app.route('/dashboard')
